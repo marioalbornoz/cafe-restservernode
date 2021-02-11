@@ -1,10 +1,14 @@
-const { response } = require('express');
+const { request, response } = require('express');
 
 
-const usuariosGET = (req, res = response) => {
+const usuariosGET = (req = request, res = response) => {
+    
+    // se recomienda desectructurar queryparams
+    const query = req.query;
+
     res.status(400).json({
-        ok: true,
-        msg: 'GET API - Controlador'
+        msg: 'GET API - Controlador',
+        query
     })
 }
 
@@ -20,9 +24,12 @@ const usuariosPOST = (req, res) => {
 }
 
 const usuariosPUT = (req, res) => {
+
+    const id = req.params.id;
+
     res.json({
-        ok: true,
-        msg: 'PUT API- Controlador'
+        msg: 'PUT API- Controlador',
+        id
     })
 }
 
