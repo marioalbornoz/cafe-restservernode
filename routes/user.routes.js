@@ -5,7 +5,8 @@ const { usuariosGET,
         usuariosPUT,
         usuariosDELETE,
         usuariosPATH } = require('../controller/usuarios.controller');
-const { validarCampos } = require('../middlewares/validar-campos');
+const { esRoleValido } = require('../helpers/db-validators');
+const { validarCampos } = require('../middlewares/validar-campos'); 
 
 const router = Router();
 
@@ -18,7 +19,8 @@ router.post('/', [
     check('nombre', 'El nombre no es valido').notEmpty(),
     check('password', ' El password debe ser mayor a 6 letras').isLength({ min: 6}),
     check('correo', 'El correo no es valido').isEmail(),
-    check('rol', 'El rol no es valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    // check('rol', 'El rol no es valido').isIn(['ADMIN_ROLE', 'USER_ROLE']),
+    check('rol').custom( esRoleValido ),
     validarCampos
 
 ] ,usuariosPOST)

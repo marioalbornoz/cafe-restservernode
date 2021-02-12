@@ -19,7 +19,7 @@ class Server {
     }
 
     async conectarDB(){
-        // console.log('Se ejecuta conectarDB');
+        console.log('Se ejecuta conectarDB');
         await dbConnection();
     }
 
