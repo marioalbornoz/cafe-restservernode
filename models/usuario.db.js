@@ -39,6 +39,7 @@ const UsuarioSchema = Schema({
     }
 })
 
+// no mostrar ciertos campos del modelo al usuario
 UsuarioSchema.methods.toJSON  = function(){
     const { __v, password, ...usuario } = this.toObject();
     return usuario;
