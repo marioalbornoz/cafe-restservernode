@@ -31,12 +31,21 @@ const usuariosPOST = async(req, res) => {
     })
 }
 
-const usuariosPUT = (req, res) => {
+const usuariosPUT = async(req, res) => {
 
     const id = req.params.id;
+    const { password, google, ...resto } = req.body;
+
+    // TODO validar contra base de datos
+
+    if(password){
+        resto.password = bcrypt.hashSync(password, 10);
+    }
+
+    const usuario = await Usuario.findByIdAndUpdate( id, resto);
 
     res.json({
-        id
+        usuario
     })
 }
 
