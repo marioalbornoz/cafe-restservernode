@@ -5,14 +5,19 @@ const { usuariosGET,
         usuariosPUT,
         usuariosDELETE,
         usuariosPATH } = require('../controller/usuarios.controller');
-const { esRoleValido, esEmailValido } = require('../helpers/db-validators');
+const { esRoleValido, esEmailValido, existeUsuarioPorId } = require('../helpers/db-validators');
 const { validarCampos } = require('../middlewares/validar-campos'); 
 
 const router = Router();
 
 router.get('/', usuariosGET)
 
-router.put('/:id', usuariosPUT);
+router.put('/:id',[
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    check('rol').custom( esRoleValido ),
+    validarCampos
+] ,usuariosPUT);
 
 router.post('/', [
     /** Middlewares de express-validator */

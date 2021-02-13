@@ -34,7 +34,7 @@ const usuariosPOST = async(req, res) => {
 const usuariosPUT = async(req, res) => {
 
     const id = req.params.id;
-    const { password, google, ...resto } = req.body;
+    const { _id,password, google, ...resto } = req.body;
 
     // TODO validar contra base de datos
 
