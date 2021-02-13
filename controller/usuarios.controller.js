@@ -16,7 +16,6 @@ const usuariosGET = (req = request, res = response) => {
 
 const usuariosPOST = async(req, res) => {
 
-
     const { nombre, password, correo, rol} = req.body;
     const usuario = new Usuario( {
         nombre,
@@ -24,17 +23,6 @@ const usuariosPOST = async(req, res) => {
         correo,
         rol
     } );
-
-
-    // Verificar si el correo esta registrado
-    const existeEmailDB = await Usuario.findOne({ correo });
-
-    if(existeEmailDB){
-        return res.status(400).json({
-            message: 'Este correo ya se encuentra registrado'
-        });
-    } 
-
 
     await usuario.save();
     
