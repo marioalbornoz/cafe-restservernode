@@ -2,10 +2,10 @@
 const { Schema, model } = require('mongoose');
 
 // roles validos y mensaje en caso contrario
-let rolesValidos = {
-    values: ['ADMIN_ROLE', 'USER_ROLE'],
-    message: '{VALUE} no es un rol valido'
-}
+// let rolesValidos = {
+//     values: ['ADMIN_ROLE', 'USER_ROLE'],
+//     message: '{VALUE} no es un rol valido'
+// }
 
 const UsuarioSchema = Schema({
     nombre: {
@@ -27,7 +27,7 @@ const UsuarioSchema = Schema({
     rol: {
         type: String,
         default: 'USER_ROLE',
-        enum: rolesValidos
+        // enum: rolesValidos
     },
     estado: {
         type: Boolean,
