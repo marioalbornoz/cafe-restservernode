@@ -1,7 +1,6 @@
 const { request, response } = require('express');
 const Usuario = require('../models/usuario.db');
 const bcrypt = require('bcrypt');
-const { validationResult } = require('express-validator');
 
 const usuariosGET = (req = request, res = response) => {
     
