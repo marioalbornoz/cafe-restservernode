@@ -2,20 +2,25 @@ const { request, response } = require('express');
 const Usuario = require('../models/usuario.db');
 const bcrypt = require('bcrypt');
 
-const usuariosGET = (req = request, res = response) => {
+const usuariosGET = async(req = request, res = response) => {
     
     // se recomienda desectructurar queryparams
-    const query = req.query;
 
-    res.status(400).json({
-        msg: 'GET API - Controlador',
-        query
-    })
+    const {
+        limite = 5, desde = 0
+    } = req.query;
+    const usuarios = await Usuario.find().skip(Number(desde)).limit(Number(limite));
+    res.json(usuarios);
 }
 
-const usuariosPOST = async(req, res) => {
+const usuariosPOST = async(req, res = response) => {
 
-    const { nombre, password, correo, rol} = req.body;
+    const {
+        nombre,
+        password,
+        correo,
+        rol
+    } = req.body;
     const usuario = new Usuario( {
         nombre,
         password: bcrypt.hashSync(password,10),
@@ -33,7 +38,12 @@ const usuariosPOST = async(req, res) => {
 const usuariosPUT = async(req, res) => {
 
     const id = req.params.id;
-    const { _id,password, google, ...resto } = req.body;
+    const {
+        _id,
+        password,
+        google,
+        ...resto
+    } = req.body;
 
     // TODO validar contra base de datos
 
@@ -43,9 +53,7 @@ const usuariosPUT = async(req, res) => {
 
     const usuario = await Usuario.findByIdAndUpdate( id, resto);
 
-    res.json({
-        usuario
-    })
+    res.json(usuario)
 }
 
 const usuariosDELETE = (req, res) => {
