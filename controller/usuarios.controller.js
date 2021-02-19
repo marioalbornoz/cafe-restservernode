@@ -8,8 +8,27 @@ const usuariosGET = async(req = request, res = response) => {
     const {
         limite = 5, desde = 0
     } = req.query;
-    const usuarios = await Usuario.find().skip(Number(desde)).limit(Number(limite));
-    res.json(usuarios);
+
+    const usuariosActivos = { estado: true}
+
+    // Promesa que se ejecuta en un tiempo t, tener mas de una promesa provoca que t aumente
+    /*const usuarios = await Usuario.find(usuariosActivos)
+        .skip(Number(desde))
+        .limit(Number(limite));
+    
+    const total = await Usuario.countDocuments(usuariosActivos); */
+
+    // usar una coleccion de promesas permite que se ejecuten en simultaneo, si una arroja error, todas lo haran
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments(usuariosActivos),
+        Usuario.find(usuariosActivos)
+            .skip(Number(desde))
+            .limit(Number(limite))
+    ])
+    res.json({
+        total,
+        usuarios
+    });
 }
 
 const usuariosPOST = async(req, res = response) => {
