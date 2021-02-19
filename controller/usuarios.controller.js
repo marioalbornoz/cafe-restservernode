@@ -74,11 +74,13 @@ const usuariosPUT = async(req, res) => {
     res.json(usuario)
 }
 
-const usuariosDELETE = (req, res) => {
-    res.json({
-        ok: true,
-        msg: 'DELETE API - Controlador'
-    })
+const usuariosDELETE = async(req, res) => {
+
+    const { id } = req.params;
+    const query = { estado: false}
+    const usuario = await Usuario.findByIdAndUpdate(id, query, { new: true})
+    
+    res.json(usuario)
 }
 
 const usuariosPATH = (req, res) => {

@@ -31,7 +31,11 @@ router.post('/', [
 
 ] ,usuariosPOST)
 
-router.delete('/', usuariosDELETE)
+router.delete('/:id',[
+    check('id', 'No es un id valido').isMongoId(),
+    check('id').custom( existeUsuarioPorId ),
+    validarCampos
+] ,usuariosDELETE)
 
 router.patch('/', usuariosPATH)
 
