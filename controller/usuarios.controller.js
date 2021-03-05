@@ -2,6 +2,17 @@ const { request, response } = require('express');
 const Usuario = require('../models/usuario.db');
 const bcrypt = require('bcrypt');
 
+
+
+const usuarioGET = async(req = request, res = response) => {
+
+    const id = req.params.id;
+    const usuario = await Usuario.findById(id)
+    res.json({
+        usuario
+    })
+}
+
 const usuariosGET = async(req = request, res = response) => {
     
     // se recomienda desectructurar queryparams
@@ -77,6 +88,8 @@ const usuariosPUT = async(req, res) => {
 const usuariosDELETE = async(req, res) => {
 
     const { id } = req.params;
+    const uid = req.uid;
+
     const query = { estado: false}
     const usuario = await Usuario.findByIdAndUpdate(id, query, { new: true})
     
@@ -92,6 +105,7 @@ const usuariosPATH = (req, res) => {
 
 
 module.exports = {
+    usuarioGET,
     usuariosGET,
     usuariosPOST,
     usuariosPUT,
