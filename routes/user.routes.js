@@ -6,11 +6,17 @@ const { usuarioGET,
         usuariosPUT,
         usuariosDELETE,
         usuariosPATH } = require('../controller/usuarios.controller');
-const { esRoleValido, esEmailValido, existeUsuarioPorId } = require('../helpers/db-validators');
+const {
+  esRoleValido,
+  esEmailValido,
+  existeUsuarioPorId,
+} = require("../helpers/db-validators");
 // middlewares
-const { validarCampos } = require('../middlewares/validar-campos'); 
-const { validarJWT } = require('../middlewares/validar-jwt');
-const { esAdminRole, tieneRole } = require('../middlewares/validar-roles');
+const {
+  validarCampos,
+  validarJWT,
+  tieneRole,
+} = require('../middlewares');
 
 const router = Router();
 
