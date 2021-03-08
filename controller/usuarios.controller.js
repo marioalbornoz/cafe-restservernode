@@ -88,12 +88,12 @@ const usuariosPUT = async(req, res) => {
 const usuariosDELETE = async(req, res) => {
 
     const { id } = req.params;
-    const uid = req.uid;
-
+   
+    const usuarioAuth = req.usuario.nombre;
     const query = { estado: false}
     const usuario = await Usuario.findByIdAndUpdate(id, query, { new: true})
     
-    res.json(usuario)
+    res.json({usuario, usuarioAuth})
 }
 
 const usuariosPATH = (req, res) => {
