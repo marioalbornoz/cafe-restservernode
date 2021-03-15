@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { CrearCategoria } = require('../controller/categorias.controller');
+const { CrearCategoria, ObtenerCategorias } = require('../controller/categorias.controller');
 
 // middlewares
 const {
@@ -14,9 +14,7 @@ const {
 // {{url}}/api/categoria
 
 // Obtener todas las categorias - publico
-router.get('/', (req, res) => {
-    res.json({msg: 'GET'});
-})
+router.get('/', ObtenerCategorias)
 
 // Obtener una categoria por id - publico
 router.get('/:id', (req, res) => {
