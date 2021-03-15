@@ -1,3 +1,5 @@
+const { response } = require('express');
+const { Categoria } = require('../models');
 const Role = require('../models/rol.db');
 const Usuario = require('../models/usuario.db');
 
@@ -26,8 +28,18 @@ const existeUsuarioPorId = async( id ) => {
     } 
 }
 
+// valida que existe categoria por id
+const existeCategoriaPorId = async(id) => {
+
+    const existeCategoria = await Categoria.findById(id);
+    if(!existeCategoria){
+        throw new Error(`Categoria de id ${id} no existe`);
+    }
+}
+
 module.exports = {
     esRoleValido,
     esEmailValido,
-    existeUsuarioPorId
+    existeUsuarioPorId,
+    existeCategoriaPorId
 }

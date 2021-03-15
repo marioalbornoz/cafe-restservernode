@@ -5,7 +5,7 @@ const { Categoria } = require("../models");
 
 // ObtenerCategorias - paginado - total - populate
 
-const ObtenerCategorias = async(req, res = response) => {
+const obtenerCategorias = async(req, res = response) => {
      // se recomienda desectructurar queryparams
      const {
         limite = 5, desde = 0
@@ -36,10 +36,17 @@ const ObtenerCategorias = async(req, res = response) => {
 
 
 // obtenerCategoria 
+const obtenerCategoria = async(req, res = response) => {
+    const {id} = req.params;
+    const categoria = await Categoria.findById(id).populate('usuario', 'nombre');
+
+    res.json(categoria)
+}
+
 
 // CrearCategoria 
 
-const CrearCategoria = async(req, res = response) => {
+const crearCategoria = async(req, res = response) => {
     const nombre = req.body.nombre.toUpperCase();
 
     const categoriaDB = await Categoria.findOne({nombre});
@@ -67,8 +74,9 @@ const CrearCategoria = async(req, res = response) => {
 
 
 module.exports = {
-    CrearCategoria,
-    ObtenerCategorias
+    crearCategoria,
+    obtenerCategorias,
+    obtenerCategoria
 }
 
 
