@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
+const { CrearCategoria } = require('../controller/categorias.controller');
 
 // middlewares
 const {
@@ -11,27 +12,34 @@ const {
   const router = Router();
 
 // {{url}}/api/categoria
+
+// Obtener todas las categorias - publico
 router.get('/', (req, res) => {
     res.json({msg: 'GET'});
 })
 
+// Obtener una categoria por id - publico
 router.get('/:id', (req, res) => {
   res.json({
     msg: 'GET - ID'
   })
 })
 
-router.post('/', (req, res) => {
-  res.json({
-    msg: 'POST'
-  })
-})
+// Crear categoria - privado - cualquier usuario con un token valido
+router.post('/',[
+  validarJWT,
+  check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+  validarCampos
+], CrearCategoria)
 
+// actualizar - privado- usuarios con token valido
 router.put('/:id', (req, res) => {
   res.json({
     msg: 'PUT'
   })
 })
+
+// borra una categoria - admin
 router.delete('/:id', (req, res) => {
   res.json({
     msg: 'Delete - ID'
