@@ -72,11 +72,40 @@ const crearCategoria = async(req, res = response) => {
 
 }
 
+// actualizar categoria
+const actualizarCategoria = async(req, res = response) => {
+    const {id} = req.params;
+
+    // no se puede actualziar usuario y estado desde el cliente
+    const {estado, usuario, ...data} = req.body;
+
+    data.nombre = data.nombre.toUpperCase();
+    data.usuario = req.usuario._id;
+
+    const categoria = await Categoria.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+
+    res.json(categoria)
+}
+
+// Delete categoria
+const borrarCategoria = async(req, res = response) => {
+    const { id } = req.params;
+    const categoriaEliminada = await Categoria.findByIdAndUpdate(
+      id,
+      { estado: false },
+      { new: true }
+    );
+    res.json(categoriaEliminada)
+}
 
 module.exports = {
     crearCategoria,
     obtenerCategorias,
-    obtenerCategoria
+    obtenerCategoria,
+    actualizarCategoria,
+    borrarCategoria
 }
 
 

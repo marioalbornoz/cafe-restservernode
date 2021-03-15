@@ -5,6 +5,8 @@ const {
   crearCategoria,
   obtenerCategorias,
   obtenerCategoria,
+  actualizarCategoria,
+  borrarCategoria,
 } = require("../controller/categorias.controller");
 
 // middlewares
@@ -12,7 +14,9 @@ const {
     validarCampos,
     validarJWT,
     tieneRole,
+    esAdminRole,
   } = require('../middlewares');
+const { validate } = require('../models/categoria.db');
   
   const router = Router();
 
@@ -36,17 +40,21 @@ router.post('/',[
 ], crearCategoria)
 
 // actualizar - privado- usuarios con token valido
-router.put('/:id', (req, res) => {
-  res.json({
-    msg: 'PUT'
-  })
-})
+router.put('/:id', [
+  validarJWT,
+  check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+  check('id').custom(existeCategoriaPorId),
+  check('id', 'No es un id de Mongo valido').isMongoId(),
+  validarCampos
+], actualizarCategoria)
 
 // borra una categoria - admin
-router.delete('/:id', (req, res) => {
-  res.json({
-    msg: 'Delete - ID'
-  })
-})
+router.delete('/:id',[
+  validarJWT,
+  esAdminRole,
+  check('id', 'No es un id de Mongo valido').isMongoId(),
+  check('id').custom(existeCategoriaPorId),
+  validarCampos
+], borrarCategoria)
 
 module.exports = router;
