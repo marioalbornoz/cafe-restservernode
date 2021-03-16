@@ -1,5 +1,5 @@
 const { response } = require('express');
-const { Categoria } = require('../models');
+const { Categoria, Producto } = require('../models');
 const Role = require('../models/rol.db');
 const Usuario = require('../models/usuario.db');
 
@@ -37,9 +37,19 @@ const existeCategoriaPorId = async(id) => {
     }
 }
 
+// valida que existe producto por id
+const existeProductoPorId = async(id) => {
+
+    const existeProducto = await Producto.findById(id);
+    if(!existeProducto){
+        throw new Error(`Producto de id ${id} no existe`);
+    }
+}
+
 module.exports = {
     esRoleValido,
     esEmailValido,
     existeUsuarioPorId,
-    existeCategoriaPorId
+    existeCategoriaPorId,
+    existeProductoPorId
 }
