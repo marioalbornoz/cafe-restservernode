@@ -114,9 +114,10 @@ const mostrarImagen = async(req, res = response) => {
             return res.sendFile(pathImagen);
         }
     }
-    res.json({
-        msg: 'falta placeholder'
-    })
+    // Si no tiene imagen
+    const defaultImg = 'no-image.jpg';
+    const pathImagen = path.join(__dirname, '../public/assets', defaultImg); /* Ruta de la imagen por Defecto*/
+    res.sendFile(pathImagen)
 };
 
 
