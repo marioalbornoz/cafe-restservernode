@@ -20,9 +20,21 @@ const subirArchivos = async(req, res = response) => {
     } catch (error) {
       res.status(500).json({ error });
     }
-} 
+}
 
+
+
+// Actualizar archivos
+const actualizarArchivos = (req, res = response) => {
+    const {coleccion, id} = req.params;
+
+    res.json({
+        id: id,
+        coleccion: coleccion,
+    })
+}
 
 module.exports = {
-    subirArchivos
+    subirArchivos,
+    actualizarArchivos
 }
