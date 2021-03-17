@@ -1,12 +1,16 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
-const { subirArchivos , actualizarArchivos} = require('../controller/uploads.controller');
+const { subirArchivos , actualizarArchivos, mostrarImagen} = require('../controller/uploads.controller');
 const { coleccionesPermitidas } = require('../helpers');
 const { validarCampos, validarArchivoSubir } = require('../middlewares');
 
 
 
 const router = Router();
+
+
+
+router.get('/:coleccion/:id', mostrarImagen);
 
 router.post('/',validarArchivoSubir, subirArchivos);
 
