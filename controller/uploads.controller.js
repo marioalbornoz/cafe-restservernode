@@ -10,12 +10,16 @@ const subirArchivos = async(req, res = response) => {
       return;
     }
     
-    // Imagenes
-    const nombre = await subirArchivo(req.files);
+    try {
+      // Imagenes
+      const nombre = await subirArchivo(req.files, undefined, 'imgs');
 
-    res.json({
-        nombre
-    })
+      res.json({
+        nombre,
+      });
+    } catch (error) {
+      res.status(500).json({ error });
+    }
 } 
 
 
