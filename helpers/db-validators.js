@@ -49,7 +49,7 @@ const existeProductoPorId = async(id) => {
 // valida colecciones permitidas
 const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
 
-    const incluida = colecciones.includes(colecciones);
+    const incluida = colecciones.includes(coleccion);
     if(!incluida){
         throw new Error(
           `La coleccion ${coleccion} no es permitida entre ${colecciones}`

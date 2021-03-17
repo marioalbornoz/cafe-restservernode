@@ -29,6 +29,7 @@ const ProductoSchema = Schema({
   },
   desc: String,
   disponible: { type: Boolean, default: true },
+  img: String,
 });
 
 // no mostrar ciertos campos del modelo al usuario
