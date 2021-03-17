@@ -1,5 +1,6 @@
+const path = require('path');
 const { response } = require("express");
-const path = require('path')
+const { v4: uuidv4} = require('uuid')
 
 
 const subirArchivos = (req, res = response) => {
@@ -10,9 +11,9 @@ const subirArchivos = (req, res = response) => {
     }
   
     const { archivo } = req.files;
+    // valdiar la extension del archivo
     const nombreCortado = archivo.name.split(".");
     const extension = nombreCortado[nombreCortado.length -1 ];
-    console.log(extension);
 
     // extensiones validadas
     const extensionesvalidas = ['png','jpeg', 'jpg', 'gif'];
@@ -22,17 +23,18 @@ const subirArchivos = (req, res = response) => {
         })
     }
 
-    res.json({extension})
+    // nombre del archivo al subirse
+    const nombreTemp = `${uuidv4()}.${extension}`;
+
+    const uploadPath = path.join(__dirname, "../uploads/", nombreTemp);
   
-//     const uploadPath = path.join(__dirname, '../uploads/',archivo.name);
+     archivo.mv(uploadPath, (err) => {
+      if (err) {
+         return res.status(500).send(err);
+       }
   
-//     archivo.mv(uploadPath, (err) => {
-//       if (err) {
-//         return res.status(500).send(err);
-//       }
-  
-//       res.send('File uploaded to ' + uploadPath);
-//     });
+      res.send("File uploaded to " + uploadPath);
+     });
 } 
 
 
